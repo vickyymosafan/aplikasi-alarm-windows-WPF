@@ -26,6 +26,7 @@ namespace AplikasiAlarmWindows.ViewModel
         private string _pesanValidasi;
         private string _fileSuaraTerpilih;
         private string _waktuSekarang;
+        private bool _adaAlarmAktif;
         private System.Windows.Threading.DispatcherTimer _timerWaktu;
 
         #endregion
@@ -103,6 +104,19 @@ namespace AplikasiAlarmWindows.ViewModel
             set
             {
                 _waktuSekarang = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Indikator apakah ada alarm yang sedang aktif
+        /// </summary>
+        public bool AdaAlarmAktif
+        {
+            get => _adaAlarmAktif;
+            set
+            {
+                _adaAlarmAktif = value;
                 OnPropertyChanged();
             }
         }
@@ -268,6 +282,9 @@ namespace AplikasiAlarmWindows.ViewModel
                 
                 // Simpan perubahan ke file
                 _layananPenyimpanan.SimpanAlarm(DaftarAlarm);
+                
+                // Update flag ada alarm aktif
+                AdaAlarmAktif = false;
             }
         }
 
@@ -306,6 +323,7 @@ namespace AplikasiAlarmWindows.ViewModel
         {
             // Set status alarm menjadi aktif
             alarm.IsAktif = true;
+            AdaAlarmAktif = true;
 
             // Tampilkan notifikasi
             _layananNotifikasi.TampilkanNotifikasi(alarm);
