@@ -49,24 +49,5 @@ namespace AplikasiAlarmWindows.Service
             DateTime utcNow = DateTime.UtcNow;
             return TimeZoneInfo.ConvertTimeFromUtc(utcNow, _timezoneWIB);
         }
-
-        /// <summary>
-        /// Mendapatkan nama timezone yang digunakan
-        /// </summary>
-        /// <returns>Nama timezone</returns>
-        public static string GetNamaTimezone()
-        {
-            return _timezoneWIB.DisplayName;
-        }
-
-        /// <summary>
-        /// Mendapatkan offset UTC dari timezone WIB
-        /// </summary>
-        /// <returns>Offset dalam format string (contoh: +07:00)</returns>
-        public static string GetOffsetUTC()
-        {
-            TimeSpan offset = _timezoneWIB.BaseUtcOffset;
-            return $"{(offset.Hours >= 0 ? "+" : "")}{offset.Hours:D2}:{offset.Minutes:D2}";
-        }
     }
 }
