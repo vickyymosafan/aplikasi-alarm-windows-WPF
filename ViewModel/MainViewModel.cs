@@ -44,6 +44,16 @@ namespace AplikasiAlarmWindows.ViewModel
         public ObservableCollection<string> DaftarFileSuara { get; set; }
 
         /// <summary>
+        /// Daftar pilihan jam (0-23)
+        /// </summary>
+        public ObservableCollection<int> DaftarJam { get; set; }
+
+        /// <summary>
+        /// Daftar pilihan menit (0-59)
+        /// </summary>
+        public ObservableCollection<int> DaftarMenit { get; set; }
+
+        /// <summary>
         /// File suara yang dipilih untuk alarm baru
         /// </summary>
         public string FileSuaraTerpilih
@@ -152,6 +162,20 @@ namespace AplikasiAlarmWindows.ViewModel
             // Inisialisasi koleksi alarm
             DaftarAlarm = new ObservableCollection<Alarm>();
             DaftarFileSuara = new ObservableCollection<string>();
+            
+            // Inisialisasi daftar jam (0-23)
+            DaftarJam = new ObservableCollection<int>();
+            for (int i = 0; i <= 23; i++)
+            {
+                DaftarJam.Add(i);
+            }
+            
+            // Inisialisasi daftar menit (0-59)
+            DaftarMenit = new ObservableCollection<int>();
+            for (int i = 0; i <= 59; i++)
+            {
+                DaftarMenit.Add(i);
+            }
 
             // Inisialisasi services
             _layananTimer = new LayananTimer();

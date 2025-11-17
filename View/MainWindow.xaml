@@ -122,8 +122,11 @@
                                    FontSize="12"
                                    Foreground="#7F8C8D"
                                    Margin="0,0,0,8"/>
-                        <TextBox Text="{Binding JamInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 Width="80"/>
+                        <ComboBox ItemsSource="{Binding DaftarJam}"
+                                  SelectedItem="{Binding JamInput, Mode=TwoWay}"
+                                  Width="100"
+                                  FontSize="16"
+                                  FontWeight="Bold"/>
                     </StackPanel>
                     
                     <!-- Separator -->
@@ -140,8 +143,11 @@
                                    FontSize="12"
                                    Foreground="#7F8C8D"
                                    Margin="0,0,0,8"/>
-                        <TextBox Text="{Binding MenitInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 Width="80"/>
+                        <ComboBox ItemsSource="{Binding DaftarMenit}"
+                                  SelectedItem="{Binding MenitInput, Mode=TwoWay}"
+                                  Width="100"
+                                  FontSize="16"
+                                  FontWeight="Bold"/>
                     </StackPanel>
                     
                     <!-- Suara Section -->
