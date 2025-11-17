@@ -13,7 +13,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resource\alarm-sound.wav" />
+    <!-- Copy WAV files dari Resource folder ke output directory -->
+    <None Include="Resource\*.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    
+    <!-- Copy XAML resource dictionary -->
+    <None Include="Resource\*.xaml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
