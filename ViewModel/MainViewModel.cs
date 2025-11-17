@@ -25,6 +25,8 @@ namespace AplikasiAlarmWindows.ViewModel
         private int _menitInput;
         private string _pesanValidasi;
         private string _fileSuaraTerpilih;
+        private string _waktuSekarang;
+        private System.Windows.Threading.DispatcherTimer _timerWaktu;
 
         #endregion
 
@@ -92,6 +94,19 @@ namespace AplikasiAlarmWindows.ViewModel
             }
         }
 
+        /// <summary>
+        /// Waktu Indonesia (WIB) saat ini dalam format string
+        /// </summary>
+        public string WaktuSekarang
+        {
+            get => _waktuSekarang;
+            set
+            {
+                _waktuSekarang = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         #region Commands
@@ -145,7 +160,37 @@ namespace AplikasiAlarmWindows.ViewModel
             TambahAlarmCommand = new RelayCommand(ExecuteTambahAlarm);
             StopAlarmCommand = new RelayCommand(ExecuteStopAlarm);
 
+            // Inisialisasi timer untuk update waktu realtime
+            InisialisasiTimerWaktu();
+
             Console.WriteLine($"MainViewModel diinisialisasi. {DaftarAlarm.Count} alarm dimuat.");
+        }
+
+        /// <summary>
+        /// Inisialisasi timer untuk update waktu Indonesia realtime
+        /// </summary>
+        private void InisialisasiTimerWaktu()
+        {
+            // Update waktu pertama kali
+            UpdateWaktu();
+
+            // Buat timer yang update setiap detik
+            _timerWaktu = new System.Windows.Threading.DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(1)
+            };
+
+            _timerWaktu.Tick += (sender, e) => UpdateWaktu();
+            _timerWaktu.Start();
+        }
+
+        /// <summary>
+        /// Update display waktu Indonesia
+        /// </summary>
+        private void UpdateWaktu()
+        {
+            DateTime waktuIndonesia = LayananWaktu.GetWaktuIndonesia();
+            WaktuSekarang = $"{waktuIndonesia:dddd, dd MMMM yyyy HH:mm:ss} WIB";
         }
 
         #endregion

@@ -10,7 +10,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Resource/KamusGaya.xaml"/>
+                <ResourceDictionary Source="/AplikasiAlarmWindows;component/Resource/KamusGaya.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             
             <!-- Converter untuk boolean to visibility -->
@@ -20,6 +20,7 @@
     
     <Grid Margin="{StaticResource PaddingWindow}">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/> <!-- Waktu realtime -->
             <RowDefinition Height="Auto"/> <!-- Input section -->
             <RowDefinition Height="Auto"/> <!-- Validation message -->
             <RowDefinition Height="*"/>    <!-- Alarm list -->
@@ -27,9 +28,30 @@
         </Grid.RowDefinitions>
         
         <!-- ========================================
-             INPUT SECTION (Row 0)
+             WAKTU REALTIME (Row 0)
              ======================================== -->
-        <StackPanel Grid.Row="0"
+        <Border Grid.Row="0"
+                Background="{StaticResource WarnaAbu}"
+                Padding="12"
+                Margin="{StaticResource MarginStandar}"
+                CornerRadius="4">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <TextBlock Text="🕐 "
+                           FontSize="18"
+                           VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding WaktuSekarang}"
+                           FontSize="16"
+                           FontWeight="Bold"
+                           Foreground="{StaticResource WarnaTombol}"
+                           VerticalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+        
+        <!-- ========================================
+             INPUT SECTION (Row 1)
+             ======================================== -->
+        <StackPanel Grid.Row="1"
                     Orientation="Horizontal"
                     HorizontalAlignment="Left"
                     Margin="{StaticResource MarginStandar}">
@@ -71,18 +93,18 @@
         </StackPanel>
         
         <!-- ========================================
-             VALIDATION MESSAGE (Row 1)
+             VALIDATION MESSAGE (Row 2)
              ======================================== -->
-        <TextBlock Grid.Row="1"
+        <TextBlock Grid.Row="2"
                    Text="{Binding PesanValidasi}"
                    Foreground="{StaticResource WarnaTeksError}"
                    Margin="{StaticResource MarginStandar}"
                    TextWrapping="Wrap"/>
         
         <!-- ========================================
-             ALARM LIST (Row 2)
+             ALARM LIST (Row 3)
              ======================================== -->
-        <ListBox Grid.Row="2"
+        <ListBox Grid.Row="3"
                  ItemsSource="{Binding DaftarAlarm}"
                  Margin="{StaticResource MarginStandar}">
             <ListBox.ItemTemplate>
@@ -121,9 +143,9 @@
         </ListBox>
         
         <!-- ========================================
-             CONTROL BUTTONS (Row 3)
+             CONTROL BUTTONS (Row 4)
              ======================================== -->
-        <StackPanel Grid.Row="3"
+        <StackPanel Grid.Row="4"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right"
                     Margin="{StaticResource MarginStandar}">

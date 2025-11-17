@@ -80,8 +80,8 @@ namespace AplikasiAlarmWindows.Service
                 return;
             }
 
-            // Dapatkan waktu sistem saat ini
-            DateTime waktuSekarang = DateTime.Now;
+            // Dapatkan waktu Indonesia (WIB) saat ini
+            DateTime waktuSekarang = LayananWaktu.GetWaktuIndonesia();
             int jamSekarang = waktuSekarang.Hour;
             int menitSekarang = waktuSekarang.Minute;
 
@@ -94,7 +94,7 @@ namespace AplikasiAlarmWindows.Service
                     alarm.Menit == menitSekarang && 
                     !alarm.IsAktif)
                 {
-                    Console.WriteLine($"Alarm terpicu: {alarm.ToString()}");
+                    Console.WriteLine($"Alarm terpicu: {alarm.ToString()} pada {waktuSekarang:HH:mm:ss} WIB");
                     
                     // Trigger event AlarmTerpicu
                     AlarmTerpicu?.Invoke(this, alarm);

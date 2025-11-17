@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net10.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <Nullable>enable</Nullable>
     <PlatformTarget>x64</PlatformTarget>
@@ -27,10 +27,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     
-    <!-- Copy XAML resource dictionary -->
-    <None Include="Resource\*.xaml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
+    <!-- Include XAML resource dictionary sebagai Resource -->
+    <Resource Include="Resource\*.xaml" />
   </ItemGroup>
 
 </Project>
