@@ -40,30 +40,79 @@ AplikasiAlarmWindows/
 
 ## Cara Build
 
+### Prerequisites
 1. Pastikan .NET 6.0 SDK terinstall
 2. Tambahkan file `alarm-sound.wav` ke folder `Resource/` (lihat Resource/README.md)
-3. Restore NuGet packages:
+
+### Build Debug
+1. Restore NuGet packages:
    ```
    dotnet restore
    ```
-4. Build proyek:
+
+2. Build proyek (Debug mode):
    ```
    dotnet build
    ```
-5. Run aplikasi:
+
+3. Run aplikasi:
    ```
    dotnet run
    ```
+   
+   Atau jalankan executable langsung:
+   ```
+   .\bin\Debug\net6.0-windows\AplikasiAlarmWindows.exe
+   ```
 
-## Cara Build Release
+### Build Release
 
 Untuk membuat executable yang dapat didistribusikan:
 
-```
-dotnet publish -c Release -r win-x64 --self-contained false
-```
+1. Build Release mode:
+   ```
+   dotnet build -c Release
+   ```
+   
+   Executable: `bin\Release\net6.0-windows\AplikasiAlarmWindows.exe`
 
-Executable akan berada di folder `bin/Release/net6.0-windows/win-x64/publish/`
+2. Publish untuk distribusi (framework-dependent):
+   ```
+   dotnet publish -c Release -r win-x64 --self-contained false
+   ```
+   
+   Output: `bin\Release\net6.0-windows\win-x64\publish\`
+
+3. Publish self-contained (tidak perlu .NET runtime):
+   ```
+   dotnet publish -c Release -r win-x64 --self-contained true
+   ```
+   
+   Output: `bin\Release\net6.0-windows\win-x64\publish\`
+
+### Build Configuration
+
+- **Output Type**: Windows Application (WinExe) - no console window
+- **Platform**: x64
+- **Target Framework**: .NET 6.0 Windows
+- **Dependencies**: Newtonsoft.Json (automatically restored)
+
+### Deployment
+
+Untuk distribusi aplikasi:
+
+1. Copy seluruh folder `publish\` ke komputer target
+2. Pastikan file `alarm-sound.wav` ada di folder `Resource\`
+3. Jalankan `AplikasiAlarmWindows.exe`
+
+**Framework-dependent deployment:**
+- Ukuran lebih kecil
+- Memerlukan .NET 6.0 Runtime di komputer target
+
+**Self-contained deployment:**
+- Ukuran lebih besar (~70MB)
+- Tidak memerlukan .NET Runtime di komputer target
+- Recommended untuk distribusi ke end users
 
 ## Status Development
 
