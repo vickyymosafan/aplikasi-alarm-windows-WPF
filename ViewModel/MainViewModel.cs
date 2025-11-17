@@ -24,6 +24,7 @@ namespace AplikasiAlarmWindows.ViewModel
         private int _jamInput;
         private int _menitInput;
         private string _pesanValidasi;
+        private string _fileSuaraTerpilih;
 
         #endregion
 
@@ -33,6 +34,24 @@ namespace AplikasiAlarmWindows.ViewModel
         /// Koleksi alarm yang tersimpan
         /// </summary>
         public ObservableCollection<Alarm> DaftarAlarm { get; set; }
+
+        /// <summary>
+        /// Daftar file suara yang tersedia
+        /// </summary>
+        public ObservableCollection<string> DaftarFileSuara { get; set; }
+
+        /// <summary>
+        /// File suara yang dipilih untuk alarm baru
+        /// </summary>
+        public string FileSuaraTerpilih
+        {
+            get => _fileSuaraTerpilih;
+            set
+            {
+                _fileSuaraTerpilih = value;
+                OnPropertyChanged();
+            }
+        }
 
         /// <summary>
         /// Input jam untuk alarm baru (0-23)
@@ -98,12 +117,16 @@ namespace AplikasiAlarmWindows.ViewModel
         {
             // Inisialisasi koleksi alarm
             DaftarAlarm = new ObservableCollection<Alarm>();
+            DaftarFileSuara = new ObservableCollection<string>();
 
             // Inisialisasi services
             _layananTimer = new LayananTimer();
             _layananPenyimpanan = new LayananPenyimpanan();
             _layananNotifikasi = new LayananNotifikasi();
             _pemutarAudio = new PemutarAudio();
+
+            // Muat daftar file suara yang tersedia
+            MuatDaftarFileSuara();
 
             // Muat alarm dari penyimpanan
             var alarmTersimpan = _layananPenyimpanan.MuatAlarm();
@@ -134,8 +157,11 @@ namespace AplikasiAlarmWindows.ViewModel
         /// </summary>
         private void ExecuteTambahAlarm(object parameter)
         {
-            // Buat alarm temporary untuk validasi
-            var alarmBaru = new Alarm(JamInput, MenitInput);
+            // Tentukan file suara yang akan digunakan
+            string fileSuara = string.IsNullOrEmpty(FileSuaraTerpilih) ? "Bangkit.wav" : FileSuaraTerpilih;
+
+            // Buat alarm baru dengan file suara yang dipilih
+            var alarmBaru = new Alarm(JamInput, MenitInput, fileSuara);
 
             // Validasi jam
             if (!alarmBaru.ValidasiJam())
@@ -162,7 +188,7 @@ namespace AplikasiAlarmWindows.ViewModel
             JamInput = 0;
             MenitInput = 0;
 
-            Console.WriteLine($"Alarm baru ditambahkan: {alarmBaru.ToString()}");
+            Console.WriteLine($"Alarm baru ditambahkan: {alarmBaru.ToString()} dengan suara {fileSuara}");
         }
 
         /// <summary>
@@ -200,13 +226,51 @@ namespace AplikasiAlarmWindows.ViewModel
             // Tampilkan notifikasi
             _layananNotifikasi.TampilkanNotifikasi(alarm);
 
-            // Muat dan putar suara alarm
-            // Path akan di-configure di task 14 untuk resource embedding
-            string pathSuara = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resource", "alarm-sound.wav");
+            // Muat dan putar suara alarm menggunakan file suara yang dipilih untuk alarm ini
+            string namaFile = string.IsNullOrEmpty(alarm.NamaFileSuara) ? "Bangkit.wav" : alarm.NamaFileSuara;
+            string pathSuara = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resource", namaFile);
             _pemutarAudio.MuatSuara(pathSuara);
             _pemutarAudio.Putar();
 
-            Console.WriteLine($"Alarm aktif: {alarm.ToString()}");
+            Console.WriteLine($"Alarm aktif: {alarm.ToString()} dengan suara {namaFile}");
+        }
+
+        /// <summary>
+        /// Memuat daftar file suara WAV yang tersedia di folder Resource
+        /// </summary>
+        private void MuatDaftarFileSuara()
+        {
+            try
+            {
+                string folderResource = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resource");
+                
+                if (Directory.Exists(folderResource))
+                {
+                    var wavFiles = Directory.GetFiles(folderResource, "*.wav");
+                    
+                    foreach (var filePath in wavFiles)
+                    {
+                        string namaFile = Path.GetFileName(filePath);
+                        DaftarFileSuara.Add(namaFile);
+                    }
+
+                    // Set default selection ke file pertama jika ada
+                    if (DaftarFileSuara.Count > 0)
+                    {
+                        FileSuaraTerpilih = DaftarFileSuara[0];
+                    }
+
+                    Console.WriteLine($"{DaftarFileSuara.Count} file suara ditemukan di folder Resource");
+                }
+                else
+                {
+                    Console.WriteLine("Folder Resource tidak ditemukan");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error saat memuat daftar file suara: {ex.Message}");
+            }
         }
 
         #endregion

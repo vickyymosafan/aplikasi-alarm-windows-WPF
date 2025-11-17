@@ -51,6 +51,19 @@
             <TextBox Text="{Binding MenitInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Margin="8,0,0,0"/>
             
+            <!-- Label Suara -->
+            <TextBlock Text="Suara:"
+                       VerticalAlignment="Center"
+                       Margin="16,0,0,0"/>
+            
+            <!-- Pilihan Suara -->
+            <ComboBox ItemsSource="{Binding DaftarFileSuara}"
+                      SelectedItem="{Binding FileSuaraTerpilih, Mode=TwoWay}"
+                      Width="150"
+                      Height="32"
+                      Margin="8,0,0,0"
+                      VerticalContentAlignment="Center"/>
+            
             <!-- Tombol Tambah Alarm -->
             <Button Content="Tambah Alarm"
                     Command="{Binding TambahAlarmCommand}"
@@ -76,6 +89,7 @@
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
@@ -83,10 +97,18 @@
                         <!-- Waktu alarm -->
                         <TextBlock Grid.Column="0"
                                    Text="{Binding}"
-                                   VerticalAlignment="Center"/>
+                                   VerticalAlignment="Center"
+                                   FontWeight="Bold"/>
+                        
+                        <!-- Nama file suara -->
+                        <TextBlock Grid.Column="1"
+                                   Text="{Binding NamaFileSuara, StringFormat=' - {0}'}"
+                                   VerticalAlignment="Center"
+                                   Foreground="Gray"
+                                   Margin="4,0,0,0"/>
                         
                         <!-- Status aktif -->
-                        <TextBlock Grid.Column="1"
+                        <TextBlock Grid.Column="2"
                                    Text="Aktif"
                                    Foreground="{StaticResource WarnaTeksError}"
                                    FontWeight="Bold"

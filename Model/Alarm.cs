@@ -28,12 +28,18 @@ namespace AplikasiAlarmWindows.Model
         public bool IsAktif { get; set; }
 
         /// <summary>
+        /// Nama file suara alarm (WAV)
+        /// </summary>
+        public string NamaFileSuara { get; set; }
+
+        /// <summary>
         /// Constructor default untuk deserialisasi JSON
         /// </summary>
         public Alarm()
         {
             Id = Guid.NewGuid();
             IsAktif = false;
+            NamaFileSuara = "Bangkit.wav"; // Default sound
         }
 
         /// <summary>
@@ -41,10 +47,12 @@ namespace AplikasiAlarmWindows.Model
         /// </summary>
         /// <param name="jam">Jam alarm (0-23)</param>
         /// <param name="menit">Menit alarm (0-59)</param>
-        public Alarm(int jam, int menit) : this()
+        /// <param name="namaFileSuara">Nama file suara alarm (optional)</param>
+        public Alarm(int jam, int menit, string namaFileSuara = "Bangkit.wav") : this()
         {
             Jam = jam;
             Menit = menit;
+            NamaFileSuara = namaFileSuara;
         }
 
         /// <summary>
