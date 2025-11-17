@@ -218,15 +218,19 @@
                                     </Border>
                                     
                                     <!-- Info -->
-                                    <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                                    <StackPanel Grid.Column="2" 
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center">
                                         <TextBlock Text="{Binding}"
                                                    FontSize="32"
                                                    FontWeight="Bold"
-                                                   Foreground="{StaticResource WarnaTeks}"/>
+                                                   Foreground="{StaticResource WarnaTeks}"
+                                                   TextAlignment="Center"/>
                                         <TextBlock Text="{Binding NamaFileSuara, StringFormat='🔊 {0}'}"
                                                    FontSize="14"
                                                    Foreground="{StaticResource WarnaTeksSecondary}"
-                                                   Margin="0,6,0,0"/>
+                                                   Margin="0,6,0,0"
+                                                   TextAlignment="Center"/>
                                     </StackPanel>
                                     
                                     <!-- Active Badge -->

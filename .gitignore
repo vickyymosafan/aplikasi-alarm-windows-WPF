@@ -25,18 +25,27 @@ bld/
 *.userosscache
 *.sln.docstates
 
+# Build Results
+*.dll
+*.exe
+*.pdb
+*.cache
+
 # NuGet Packages
 *.nupkg
 *.snupkg
 **/packages/*
 
-# Build Results
-*.dll
-*.exe
-*.pdb
+# Release folder
+release/
 
-# Alarm data file (generated at runtime)
+# Alarm data
 alarm-data.json
+error.log
 
-#kiro
-.kiro
+# OS files
+.DS_Store
+Thumbs.db
+
+# Kiro IDE
+.kiro/
