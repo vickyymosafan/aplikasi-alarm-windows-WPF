@@ -1,6 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using AplikasiAlarmWindows.Common;
 using AplikasiAlarmWindows.Model;
 using Newtonsoft.Json;
 
@@ -11,7 +12,7 @@ namespace AplikasiAlarmWindows.Service
     /// </summary>
     public class LayananPenyimpanan
     {
-        private readonly string _namaFile = "alarm-data.json";
+        private readonly string _namaFile = Constants.AlarmDataFileName;
 
         /// <summary>
         /// Path lengkap ke file penyimpanan alarm

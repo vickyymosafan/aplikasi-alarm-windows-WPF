@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Input;
 using AplikasiAlarmWindows.Command;
+using AplikasiAlarmWindows.Common;
 using AplikasiAlarmWindows.Model;
 using AplikasiAlarmWindows.Service;
 
@@ -165,14 +166,14 @@ namespace AplikasiAlarmWindows.ViewModel
             
             // Inisialisasi daftar jam (0-23)
             DaftarJam = new ObservableCollection<int>();
-            for (int i = 0; i <= 23; i++)
+            for (int i = Constants.MinHour; i <= Constants.MaxHour; i++)
             {
                 DaftarJam.Add(i);
             }
             
             // Inisialisasi daftar menit (0-59)
             DaftarMenit = new ObservableCollection<int>();
-            for (int i = 0; i <= 59; i++)
+            for (int i = Constants.MinMinute; i <= Constants.MaxMinute; i++)
             {
                 DaftarMenit.Add(i);
             }
@@ -247,7 +248,7 @@ namespace AplikasiAlarmWindows.ViewModel
         private void ExecuteTambahAlarm(object parameter)
         {
             // Tentukan file suara yang akan digunakan
-            string fileSuara = string.IsNullOrEmpty(FileSuaraTerpilih) ? "Bangkit.wav" : FileSuaraTerpilih;
+            string fileSuara = string.IsNullOrEmpty(FileSuaraTerpilih) ? Constants.DefaultSoundFileName : FileSuaraTerpilih;
 
             // Buat alarm baru dengan file suara yang dipilih
             var alarmBaru = new Alarm(JamInput, MenitInput, fileSuara);
@@ -255,14 +256,14 @@ namespace AplikasiAlarmWindows.ViewModel
             // Validasi jam
             if (!alarmBaru.ValidasiJam())
             {
-                PesanValidasi = "Jam harus antara 0 dan 23";
+                PesanValidasi = Constants.InvalidHourMessage;
                 return;
             }
 
             // Validasi menit
             if (!alarmBaru.ValidasiMenit())
             {
-                PesanValidasi = "Menit harus antara 0 dan 59";
+                PesanValidasi = Constants.InvalidMinuteMessage;
                 return;
             }
 
@@ -353,8 +354,8 @@ namespace AplikasiAlarmWindows.ViewModel
             _layananNotifikasi.TampilkanNotifikasi(alarm);
 
             // Muat dan putar suara alarm menggunakan file suara yang dipilih untuk alarm ini
-            string namaFile = string.IsNullOrEmpty(alarm.NamaFileSuara) ? "Bangkit.wav" : alarm.NamaFileSuara;
-            string pathSuara = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resource", namaFile);
+            string namaFile = string.IsNullOrEmpty(alarm.NamaFileSuara) ? Constants.DefaultSoundFileName : alarm.NamaFileSuara;
+            string pathSuara = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Constants.ResourceFolderName, namaFile);
             _pemutarAudio.MuatSuara(pathSuara);
             _pemutarAudio.Putar();
 
@@ -368,11 +369,11 @@ namespace AplikasiAlarmWindows.ViewModel
         {
             try
             {
-                string folderResource = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resource");
+                string folderResource = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Constants.ResourceFolderName);
                 
                 if (Directory.Exists(folderResource))
                 {
-                    var wavFiles = Directory.GetFiles(folderResource, "*.wav");
+                    var wavFiles = Directory.GetFiles(folderResource, Constants.SoundFileExtension);
                     
                     foreach (var filePath in wavFiles)
                     {

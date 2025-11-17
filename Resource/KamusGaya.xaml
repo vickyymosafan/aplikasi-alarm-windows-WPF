@@ -6,13 +6,13 @@
          WARNA (SOLID COLORS) - Black & White Theme
          ======================================== -->
     
-    <!-- Background & Foreground -->
+    <!-- Base Colors -->
     <SolidColorBrush x:Key="WarnaLatar" Color="#FFFFFF"/>        <!-- white background -->
     <SolidColorBrush x:Key="WarnaTeks" Color="#000000"/>         <!-- black text -->
     
-    <!-- Card -->
-    <SolidColorBrush x:Key="WarnaCard" Color="#FFFFFF"/>         <!-- white card -->
-    <SolidColorBrush x:Key="WarnaCardForeground" Color="#000000"/>
+    <!-- Aliases for semantic naming -->
+    <StaticResource x:Key="WarnaCard" ResourceKey="WarnaLatar"/>
+    <StaticResource x:Key="WarnaCardForeground" ResourceKey="WarnaTeks"/>
     
     <!-- Primary -->
     <SolidColorBrush x:Key="WarnaPrimary" Color="#000000"/>      <!-- black primary -->
@@ -20,17 +20,17 @@
     
     <!-- Accent -->
     <SolidColorBrush x:Key="WarnaAccent" Color="#E0E0E0"/>       <!-- light gray accent -->
-    <SolidColorBrush x:Key="WarnaAccentForeground" Color="#000000"/>
+    <StaticResource x:Key="WarnaAccentForeground" ResourceKey="WarnaTeks"/>
     
     <!-- Destructive -->
-    <SolidColorBrush x:Key="WarnaDestructive" Color="#FFFFFF"/>  <!-- white destructive -->
-    <SolidColorBrush x:Key="WarnaDestructiveForeground" Color="#000000"/>
+    <StaticResource x:Key="WarnaDestructive" ResourceKey="WarnaLatar"/>
+    <StaticResource x:Key="WarnaDestructiveForeground" ResourceKey="WarnaTeks"/>
     
     <!-- Border -->
-    <SolidColorBrush x:Key="WarnaBorder" Color="#000000"/>       <!-- black border -->
+    <StaticResource x:Key="WarnaBorder" ResourceKey="WarnaPrimary"/>
     
     <!-- Button -->
-    <SolidColorBrush x:Key="WarnaTombol" Color="#000000"/>
+    <StaticResource x:Key="WarnaTombol" ResourceKey="WarnaPrimary"/>
     <SolidColorBrush x:Key="WarnaTombolHover" Color="#333333"/>
     
     <!-- Text -->

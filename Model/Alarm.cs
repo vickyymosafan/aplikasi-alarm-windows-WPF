@@ -1,4 +1,5 @@
 using System;
+using AplikasiAlarmWindows.Common;
 
 namespace AplikasiAlarmWindows.Model
 {
@@ -49,7 +50,7 @@ namespace AplikasiAlarmWindows.Model
         {
             Id = Guid.NewGuid();
             IsAktif = false;
-            NamaFileSuara = "Bangkit.wav"; // Default sound
+            NamaFileSuara = Constants.DefaultSoundFileName;
             TerakhirTerpicu = null;
             SudahSelesai = false;
         }
@@ -60,11 +61,11 @@ namespace AplikasiAlarmWindows.Model
         /// <param name="jam">Jam alarm (0-23)</param>
         /// <param name="menit">Menit alarm (0-59)</param>
         /// <param name="namaFileSuara">Nama file suara alarm (optional)</param>
-        public Alarm(int jam, int menit, string namaFileSuara = "Bangkit.wav") : this()
+        public Alarm(int jam, int menit, string namaFileSuara = null) : this()
         {
             Jam = jam;
             Menit = menit;
-            NamaFileSuara = namaFileSuara;
+            NamaFileSuara = namaFileSuara ?? Constants.DefaultSoundFileName;
         }
 
         /// <summary>
@@ -73,7 +74,7 @@ namespace AplikasiAlarmWindows.Model
         /// <returns>True jika jam valid, false jika tidak</returns>
         public bool ValidasiJam()
         {
-            return Jam >= 0 && Jam <= 23;
+            return Jam >= Constants.MinHour && Jam <= Constants.MaxHour;
         }
 
         /// <summary>
@@ -82,7 +83,7 @@ namespace AplikasiAlarmWindows.Model
         /// <returns>True jika menit valid, false jika tidak</returns>
         public bool ValidasiMenit()
         {
-            return Menit >= 0 && Menit <= 59;
+            return Menit >= Constants.MinMinute && Menit <= Constants.MaxMinute;
         }
 
         /// <summary>
