@@ -9,6 +9,8 @@ namespace AplikasiAlarmWindows.View
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainViewModel _viewModel;
+
         /// <summary>
         /// Constructor MainWindow
         /// </summary>
@@ -17,7 +19,20 @@ namespace AplikasiAlarmWindows.View
             InitializeComponent();
             
             // Inisialisasi dan set DataContext dengan MainViewModel
-            DataContext = new MainViewModel();
+            _viewModel = new MainViewModel();
+            DataContext = _viewModel;
+
+            // Subscribe ke event Closing untuk cleanup
+            Closing += MainWindow_Closing;
+        }
+
+        /// <summary>
+        /// Event handler saat window akan ditutup
+        /// </summary>
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            // Cleanup semua resource
+            _viewModel?.Cleanup();
         }
     }
 }

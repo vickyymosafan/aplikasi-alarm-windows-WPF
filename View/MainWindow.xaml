@@ -114,6 +114,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         
                         <!-- Waktu alarm -->
@@ -131,12 +132,25 @@
                         
                         <!-- Status aktif -->
                         <TextBlock Grid.Column="2"
-                                   Text="Aktif"
+                                   Text="🔔 Aktif"
                                    Foreground="{StaticResource WarnaTeksError}"
                                    FontWeight="Bold"
-                                   Margin="16,0,0,0"
+                                   Margin="16,0,8,0"
                                    VerticalAlignment="Center"
                                    Visibility="{Binding IsAktif, Converter={StaticResource BoolToVisConverter}}"/>
+                        
+                        <!-- Tombol Hapus -->
+                        <Button Grid.Column="3"
+                                Content="🗑️ Hapus"
+                                Command="{Binding DataContext.HapusAlarmCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                CommandParameter="{Binding}"
+                                Background="#D13438"
+                                Foreground="White"
+                                MinWidth="80"
+                                Height="28"
+                                Margin="8,0,0,0"
+                                FontSize="12"
+                                Cursor="Hand"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

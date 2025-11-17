@@ -88,12 +88,23 @@ namespace AplikasiAlarmWindows.Service
             // Cek setiap alarm dalam daftar
             foreach (var alarm in _daftarAlarm)
             {
+                // Cek apakah alarm sudah pernah terpicu di menit yang sama
+                bool sudahTerpicuDiMenitIni = alarm.TerakhirTerpicu.HasValue &&
+                    alarm.TerakhirTerpicu.Value.Hour == jamSekarang &&
+                    alarm.TerakhirTerpicu.Value.Minute == menitSekarang &&
+                    alarm.TerakhirTerpicu.Value.Date == waktuSekarang.Date;
+
                 // Bandingkan jam dan menit
-                // Hanya trigger jika alarm belum aktif untuk prevent multiple triggers
+                // Hanya trigger jika alarm belum aktif dan belum pernah terpicu di menit ini
                 if (alarm.Jam == jamSekarang && 
                     alarm.Menit == menitSekarang && 
-                    !alarm.IsAktif)
+                    !alarm.IsAktif &&
+                    !alarm.SudahSelesai &&
+                    !sudahTerpicuDiMenitIni)
                 {
+                    // Simpan waktu trigger
+                    alarm.TerakhirTerpicu = waktuSekarang;
+                    
                     Console.WriteLine($"Alarm terpicu: {alarm.ToString()} pada {waktuSekarang:HH:mm:ss} WIB");
                     
                     // Trigger event AlarmTerpicu

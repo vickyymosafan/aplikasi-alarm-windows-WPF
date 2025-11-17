@@ -121,6 +121,11 @@ namespace AplikasiAlarmWindows.ViewModel
         /// </summary>
         public ICommand StopAlarmCommand { get; }
 
+        /// <summary>
+        /// Command untuk menghapus alarm dari daftar
+        /// </summary>
+        public ICommand HapusAlarmCommand { get; }
+
         #endregion
 
         #region Constructor
@@ -159,6 +164,7 @@ namespace AplikasiAlarmWindows.ViewModel
             // Inisialisasi commands
             TambahAlarmCommand = new RelayCommand(ExecuteTambahAlarm);
             StopAlarmCommand = new RelayCommand(ExecuteStopAlarm);
+            HapusAlarmCommand = new RelayCommand(ExecuteHapusAlarm);
 
             // Inisialisasi timer untuk update waktu realtime
             InisialisasiTimerWaktu();
@@ -247,12 +253,45 @@ namespace AplikasiAlarmWindows.ViewModel
             // Tutup notifikasi
             _layananNotifikasi.TutupNotifikasi();
 
-            // Cari dan update alarm yang aktif
+            // Cari alarm yang aktif
             var alarmAktif = DaftarAlarm.FirstOrDefault(a => a.IsAktif);
             if (alarmAktif != null)
             {
+                Console.WriteLine($"Alarm dihentikan dan dihapus: {alarmAktif.ToString()}");
+                
+                // Tandai alarm sudah selesai
                 alarmAktif.IsAktif = false;
-                Console.WriteLine($"Alarm dihentikan: {alarmAktif.ToString()}");
+                alarmAktif.SudahSelesai = true;
+                
+                // Auto-delete alarm setelah stop
+                DaftarAlarm.Remove(alarmAktif);
+                
+                // Simpan perubahan ke file
+                _layananPenyimpanan.SimpanAlarm(DaftarAlarm);
+            }
+        }
+
+        /// <summary>
+        /// Eksekusi command untuk menghapus alarm dari daftar
+        /// </summary>
+        private void ExecuteHapusAlarm(object parameter)
+        {
+            if (parameter is Alarm alarm)
+            {
+                // Jika alarm sedang aktif, hentikan dulu
+                if (alarm.IsAktif)
+                {
+                    _pemutarAudio.Berhenti();
+                    _layananNotifikasi.TutupNotifikasi();
+                }
+
+                // Hapus alarm dari daftar
+                DaftarAlarm.Remove(alarm);
+
+                // Simpan perubahan ke file
+                _layananPenyimpanan.SimpanAlarm(DaftarAlarm);
+
+                Console.WriteLine($"Alarm dihapus: {alarm.ToString()}");
             }
         }
 
@@ -316,6 +355,42 @@ namespace AplikasiAlarmWindows.ViewModel
             {
                 Console.WriteLine($"Error saat memuat daftar file suara: {ex.Message}");
             }
+        }
+
+        #endregion
+
+        #region Cleanup
+
+        /// <summary>
+        /// Cleanup semua resource saat aplikasi ditutup
+        /// </summary>
+        public void Cleanup()
+        {
+            Console.WriteLine("Melakukan cleanup resource...");
+
+            // Stop timer waktu
+            if (_timerWaktu != null && _timerWaktu.IsEnabled)
+            {
+                _timerWaktu.Stop();
+                _timerWaktu = null;
+            }
+
+            // Stop layanan timer alarm
+            _layananTimer?.Berhenti();
+
+            // Stop audio jika sedang bermain
+            _pemutarAudio?.Berhenti();
+
+            // Tutup notifikasi jika ada
+            _layananNotifikasi?.TutupNotifikasi();
+
+            // Unsubscribe dari event
+            if (_layananTimer != null)
+            {
+                _layananTimer.AlarmTerpicu -= OnAlarmTerpicu;
+            }
+
+            Console.WriteLine("Cleanup selesai.");
         }
 
         #endregion

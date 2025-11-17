@@ -33,6 +33,16 @@ namespace AplikasiAlarmWindows.Model
         public string NamaFileSuara { get; set; }
 
         /// <summary>
+        /// Waktu terakhir alarm terpicu (untuk mencegah repeat trigger)
+        /// </summary>
+        public DateTime? TerakhirTerpicu { get; set; }
+
+        /// <summary>
+        /// Flag untuk menandai alarm sudah selesai dan siap dihapus
+        /// </summary>
+        public bool SudahSelesai { get; set; }
+
+        /// <summary>
         /// Constructor default untuk deserialisasi JSON
         /// </summary>
         public Alarm()
@@ -40,6 +50,8 @@ namespace AplikasiAlarmWindows.Model
             Id = Guid.NewGuid();
             IsAktif = false;
             NamaFileSuara = "Bangkit.wav"; // Default sound
+            TerakhirTerpicu = null;
+            SudahSelesai = false;
         }
 
         /// <summary>
