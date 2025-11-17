@@ -1,4 +1,5 @@
 using System.Windows;
+using AplikasiAlarmWindows.ViewModel;
 
 namespace AplikasiAlarmWindows.View
 {
@@ -15,7 +16,8 @@ namespace AplikasiAlarmWindows.View
         {
             InitializeComponent();
             
-            // DataContext akan di-set di App.xaml.cs atau di sini (task 13.2)
+            // Inisialisasi dan set DataContext dengan MainViewModel
+            DataContext = new MainViewModel();
         }
     }
 }
