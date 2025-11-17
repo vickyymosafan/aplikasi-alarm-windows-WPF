@@ -1,0 +1,116 @@
+<Window x:Class="AplikasiAlarmWindows.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Aplikasi Alarm Windows"
+        Width="800"
+        Height="600"
+        MinWidth="800"
+        MinHeight="600">
+    
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resource/KamusGaya.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+            <!-- Converter untuk boolean to visibility -->
+            <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    <Grid Margin="{StaticResource PaddingWindow}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/> <!-- Input section -->
+            <RowDefinition Height="Auto"/> <!-- Validation message -->
+            <RowDefinition Height="*"/>    <!-- Alarm list -->
+            <RowDefinition Height="Auto"/> <!-- Control buttons -->
+        </Grid.RowDefinitions>
+        
+        <!-- ========================================
+             INPUT SECTION (Row 0)
+             ======================================== -->
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Left"
+                    Margin="{StaticResource MarginStandar}">
+            
+            <!-- Label Jam -->
+            <TextBlock Text="Jam:"
+                       VerticalAlignment="Center"/>
+            
+            <!-- Input Jam -->
+            <TextBox Text="{Binding JamInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Margin="8,0,0,0"/>
+            
+            <!-- Label Menit -->
+            <TextBlock Text="Menit:"
+                       VerticalAlignment="Center"
+                       Margin="16,0,0,0"/>
+            
+            <!-- Input Menit -->
+            <TextBox Text="{Binding MenitInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Margin="8,0,0,0"/>
+            
+            <!-- Tombol Tambah Alarm -->
+            <Button Content="Tambah Alarm"
+                    Command="{Binding TambahAlarmCommand}"
+                    Margin="16,0,0,0"/>
+        </StackPanel>
+        
+        <!-- ========================================
+             VALIDATION MESSAGE (Row 1)
+             ======================================== -->
+        <TextBlock Grid.Row="1"
+                   Text="{Binding PesanValidasi}"
+                   Foreground="{StaticResource WarnaTeksError}"
+                   Margin="{StaticResource MarginStandar}"
+                   TextWrapping="Wrap"/>
+        
+        <!-- ========================================
+             ALARM LIST (Row 2)
+             ======================================== -->
+        <ListBox Grid.Row="2"
+                 ItemsSource="{Binding DaftarAlarm}"
+                 Margin="{StaticResource MarginStandar}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <!-- Waktu alarm -->
+                        <TextBlock Grid.Column="0"
+                                   Text="{Binding}"
+                                   VerticalAlignment="Center"/>
+                        
+                        <!-- Status aktif -->
+                        <TextBlock Grid.Column="1"
+                                   Text="Aktif"
+                                   Foreground="{StaticResource WarnaTeksError}"
+                                   FontWeight="Bold"
+                                   Margin="16,0,0,0"
+                                   VerticalAlignment="Center"
+                                   Visibility="{Binding IsAktif, Converter={StaticResource BoolToVisConverter}}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+        <!-- ========================================
+             CONTROL BUTTONS (Row 3)
+             ======================================== -->
+        <StackPanel Grid.Row="3"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="{StaticResource MarginStandar}">
+            
+            <!-- Tombol Stop Alarm -->
+            <Button Content="Stop Alarm"
+                    Command="{Binding StopAlarmCommand}"/>
+        </StackPanel>
+        
+    </Grid>
+    
+</Window>
