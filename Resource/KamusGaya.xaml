@@ -3,49 +3,48 @@
                     xmlns:sys="clr-namespace:System;assembly=System.Runtime">
 
     <!-- ========================================
-         WARNA (SOLID COLORS) - Dark Theme
-         Based on provided color scheme
+         WARNA (SOLID COLORS) - Black & White Theme
          ======================================== -->
     
     <!-- Background & Foreground -->
-    <SolidColorBrush x:Key="WarnaLatar" Color="#2B3440"/>        <!-- dark background -->
-    <SolidColorBrush x:Key="WarnaTeks" Color="#F7F8F9"/>         <!-- dark foreground -->
+    <SolidColorBrush x:Key="WarnaLatar" Color="#FFFFFF"/>        <!-- white background -->
+    <SolidColorBrush x:Key="WarnaTeks" Color="#000000"/>         <!-- black text -->
     
     <!-- Card -->
-    <SolidColorBrush x:Key="WarnaCard" Color="#3D4754"/>         <!-- dark card -->
-    <SolidColorBrush x:Key="WarnaCardForeground" Color="#F7F8F9"/>
+    <SolidColorBrush x:Key="WarnaCard" Color="#FFFFFF"/>         <!-- white card -->
+    <SolidColorBrush x:Key="WarnaCardForeground" Color="#000000"/>
     
     <!-- Primary -->
-    <SolidColorBrush x:Key="WarnaPrimary" Color="#C74B3D"/>      <!-- primary -->
-    <SolidColorBrush x:Key="WarnaPrimaryForeground" Color="#FAF9F8"/>
+    <SolidColorBrush x:Key="WarnaPrimary" Color="#000000"/>      <!-- black primary -->
+    <SolidColorBrush x:Key="WarnaPrimaryForeground" Color="#FFFFFF"/>
     
     <!-- Secondary -->
-    <SolidColorBrush x:Key="WarnaSecondary" Color="#C89A4A"/>    <!-- secondary -->
-    <SolidColorBrush x:Key="WarnaSecondaryForeground" Color="#F5EDD9"/>
+    <SolidColorBrush x:Key="WarnaSecondary" Color="#FFFFFF"/>    <!-- white secondary -->
+    <SolidColorBrush x:Key="WarnaSecondaryForeground" Color="#000000"/>
     
     <!-- Muted -->
-    <SolidColorBrush x:Key="WarnaMuted" Color="#2E3642"/>        <!-- muted -->
-    <SolidColorBrush x:Key="WarnaMutedForeground" Color="#D9DCDF"/>
+    <SolidColorBrush x:Key="WarnaMuted" Color="#F5F5F5"/>        <!-- light gray muted -->
+    <SolidColorBrush x:Key="WarnaMutedForeground" Color="#000000"/>
     
     <!-- Accent -->
-    <SolidColorBrush x:Key="WarnaAccent" Color="#D6A84F"/>       <!-- accent -->
-    <SolidColorBrush x:Key="WarnaAccentForeground" Color="#F5EDD9"/>
+    <SolidColorBrush x:Key="WarnaAccent" Color="#E0E0E0"/>       <!-- light gray accent -->
+    <SolidColorBrush x:Key="WarnaAccentForeground" Color="#000000"/>
     
     <!-- Destructive -->
-    <SolidColorBrush x:Key="WarnaDestructive" Color="#E17A5F"/>  <!-- destructive -->
-    <SolidColorBrush x:Key="WarnaDestructiveForeground" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="WarnaDestructive" Color="#FFFFFF"/>  <!-- white destructive -->
+    <SolidColorBrush x:Key="WarnaDestructiveForeground" Color="#000000"/>
     
     <!-- Border & Input -->
-    <SolidColorBrush x:Key="WarnaBorder" Color="#545E6C"/>       <!-- border -->
-    <SolidColorBrush x:Key="WarnaInput" Color="#545E6C"/>
+    <SolidColorBrush x:Key="WarnaBorder" Color="#000000"/>       <!-- black border -->
+    <SolidColorBrush x:Key="WarnaInput" Color="#FFFFFF"/>
     
     <!-- Legacy compatibility -->
-    <SolidColorBrush x:Key="WarnaTombol" Color="#C74B3D"/>
-    <SolidColorBrush x:Key="WarnaTombolHover" Color="#B03D2F"/>
-    <SolidColorBrush x:Key="WarnaTeksSecondary" Color="#D9DCDF"/>
-    <SolidColorBrush x:Key="WarnaTeksError" Color="#E17A5F"/>
-    <SolidColorBrush x:Key="WarnaSuccess" Color="#C89A4A"/>
-    <SolidColorBrush x:Key="WarnaAbu" Color="#3D4754"/>
+    <SolidColorBrush x:Key="WarnaTombol" Color="#000000"/>
+    <SolidColorBrush x:Key="WarnaTombolHover" Color="#333333"/>
+    <SolidColorBrush x:Key="WarnaTeksSecondary" Color="#666666"/>
+    <SolidColorBrush x:Key="WarnaTeksError" Color="#000000"/>
+    <SolidColorBrush x:Key="WarnaSuccess" Color="#000000"/>
+    <SolidColorBrush x:Key="WarnaAbu" Color="#F5F5F5"/>
 
     <!-- ========================================
          UKURAN FONT
@@ -82,7 +81,7 @@
     <!-- Style untuk Button -->
     <Style TargetType="Button">
         <Setter Property="Background" Value="{StaticResource WarnaPrimary}"/>
-        <Setter Property="Foreground" Value="{StaticResource WarnaPrimaryForeground}"/>
+        <Setter Property="Foreground" Value="#FFFFFF"/>
         <Setter Property="Height" Value="48"/>
         <Setter Property="MinWidth" Value="140"/>
         <Setter Property="Padding" Value="20,10"/>
@@ -104,7 +103,12 @@
                                               BlurRadius="12" 
                                               ShadowDepth="2"/>
                         </Border.Effect>
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Text="{TemplateBinding Content}"
+                                   Foreground="#FFFFFF"
+                                   FontSize="{TemplateBinding FontSize}"
+                                   FontWeight="{TemplateBinding FontWeight}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -134,6 +138,8 @@
         <Setter Property="Width" Value="80"/>
         <Setter Property="Height" Value="40"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Background" Value="#FFFFFF"/>
+        <Setter Property="Foreground" Value="#000000"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
@@ -147,7 +153,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter Property="BorderBrush" Value="{StaticResource WarnaTombol}"/>
+                            <Setter Property="BorderBrush" Value="#333333"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -161,10 +167,10 @@
         <Setter Property="Padding" Value="14,10"/>
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="BorderBrush" Value="{StaticResource WarnaBorder}"/>
+        <Setter Property="BorderBrush" Value="#000000"/>
         <Setter Property="BorderThickness" Value="2"/>
-        <Setter Property="Background" Value="#E8EAF0"/>
-        <Setter Property="Foreground" Value="#1A1A1A"/>
+        <Setter Property="Background" Value="#FFFFFF"/>
+        <Setter Property="Foreground" Value="#000000"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ComboBox">
@@ -191,7 +197,7 @@
                                                               VerticalAlignment="Center"/>
                                             <Path Grid.Column="1"
                                                   Data="M 0 0 L 4 4 L 8 0 Z"
-                                                  Fill="#1A1A1A"
+                                                  Fill="#000000"
                                                   HorizontalAlignment="Center"
                                                   VerticalAlignment="Center"/>
                                         </Grid>
@@ -200,8 +206,8 @@
                             </ToggleButton.Template>
                             <ToggleButton.Style>
                                 <Style TargetType="ToggleButton">
-                                    <Setter Property="Background" Value="#E8EAF0"/>
-                                    <Setter Property="BorderBrush" Value="{StaticResource WarnaBorder}"/>
+                                    <Setter Property="Background" Value="#FFFFFF"/>
+                                    <Setter Property="BorderBrush" Value="#000000"/>
                                     <Setter Property="BorderThickness" Value="2"/>
                                 </Style>
                             </ToggleButton.Style>
@@ -214,7 +220,7 @@
                                           Margin="12,0,32,0"
                                           VerticalAlignment="Center"
                                           HorizontalAlignment="Center"
-                                          TextBlock.Foreground="#1A1A1A"
+                                          TextBlock.Foreground="#000000"
                                           TextBlock.FontWeight="Bold"
                                           TextBlock.FontSize="20"/>
                         <Popup x:Name="Popup"
@@ -227,8 +233,8 @@
                                   SnapsToDevicePixels="True"
                                   MinWidth="{TemplateBinding ActualWidth}"
                                   MaxHeight="300">
-                                <Border Background="#E8EAF0"
-                                        BorderBrush="{StaticResource WarnaBorder}"
+                                <Border Background="#FFFFFF"
+                                        BorderBrush="#000000"
                                         BorderThickness="2"
                                         CornerRadius="8"
                                         Margin="0,4,0,0">
@@ -250,32 +256,31 @@
     <!-- Style untuk ComboBoxItem -->
     <Style TargetType="ComboBoxItem">
         <Setter Property="Padding" Value="14,12"/>
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="#1A1A1A"/>
+        <Setter Property="Background" Value="#FFFFFF"/>
+        <Setter Property="Foreground" Value="#000000"/>
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ComboBoxItem">
-                    <Border Background="{TemplateBinding Background}"
+                    <Border x:Name="ItemBorder"
+                            Background="#FFFFFF"
                             Padding="{TemplateBinding Padding}"
                             CornerRadius="6"
                             Margin="2">
                         <ContentPresenter HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
-                                          TextBlock.Foreground="{TemplateBinding Foreground}"
-                                          TextBlock.FontWeight="{TemplateBinding FontWeight}"
-                                          TextBlock.FontSize="{TemplateBinding FontSize}"/>
+                                          TextBlock.Foreground="#000000"
+                                          TextBlock.FontWeight="Bold"
+                                          TextBlock.FontSize="18"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsHighlighted" Value="True">
-                            <Setter Property="Background" Value="{StaticResource WarnaAccent}"/>
-                            <Setter Property="Foreground" Value="#1A1A1A"/>
+                            <Setter TargetName="ItemBorder" Property="Background" Value="#E0E0E0"/>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" Value="{StaticResource WarnaPrimary}"/>
-                            <Setter Property="Foreground" Value="#FFFFFF"/>
+                            <Setter TargetName="ItemBorder" Property="Background" Value="#D0D0D0"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -300,9 +305,9 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListBoxItem">
-                    <Border Background="{StaticResource WarnaCard}"
-                            BorderBrush="{StaticResource WarnaBorder}"
-                            BorderThickness="1"
+                    <Border Background="#FFFFFF"
+                            BorderBrush="#000000"
+                            BorderThickness="2"
                             CornerRadius="12"
                             Padding="20,16"
                             Margin="{TemplateBinding Margin}">
@@ -317,7 +322,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{StaticResource WarnaAbu}"/>
+                            <Setter Property="Background" Value="#F5F5F5"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -328,7 +333,7 @@
     <!-- Style untuk TextBlock -->
     <Style TargetType="TextBlock">
         <Setter Property="FontSize" Value="{StaticResource UkuranFontNormal}"/>
-        <Setter Property="Foreground" Value="{StaticResource WarnaTeks}"/>
+        <Setter Property="Foreground" Value="#000000"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
 
