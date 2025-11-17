@@ -1,0 +1,77 @@
+using System;
+
+namespace AplikasiAlarmWindows.Model
+{
+    /// <summary>
+    /// Model data untuk alarm yang menyimpan informasi waktu dan status alarm
+    /// </summary>
+    public class Alarm
+    {
+        /// <summary>
+        /// ID unik untuk setiap alarm
+        /// </summary>
+        public Guid Id { get; set; }
+
+        /// <summary>
+        /// Jam alarm (0-23)
+        /// </summary>
+        public int Jam { get; set; }
+
+        /// <summary>
+        /// Menit alarm (0-59)
+        /// </summary>
+        public int Menit { get; set; }
+
+        /// <summary>
+        /// Status apakah alarm sedang aktif/berbunyi
+        /// </summary>
+        public bool IsAktif { get; set; }
+
+        /// <summary>
+        /// Constructor default untuk deserialisasi JSON
+        /// </summary>
+        public Alarm()
+        {
+            Id = Guid.NewGuid();
+            IsAktif = false;
+        }
+
+        /// <summary>
+        /// Constructor dengan parameter untuk membuat alarm baru
+        /// </summary>
+        /// <param name="jam">Jam alarm (0-23)</param>
+        /// <param name="menit">Menit alarm (0-59)</param>
+        public Alarm(int jam, int menit) : this()
+        {
+            Jam = jam;
+            Menit = menit;
+        }
+
+        /// <summary>
+        /// Validasi apakah nilai jam valid (0-23)
+        /// </summary>
+        /// <returns>True jika jam valid, false jika tidak</returns>
+        public bool ValidasiJam()
+        {
+            return Jam >= 0 && Jam <= 23;
+        }
+
+        /// <summary>
+        /// Validasi apakah nilai menit valid (0-59)
+        /// </summary>
+        /// <returns>True jika menit valid, false jika tidak</returns>
+        public bool ValidasiMenit()
+        {
+            return Menit >= 0 && Menit <= 59;
+        }
+
+        /// <summary>
+        /// Konversi alarm ke format string "HH:mm"
+        /// </summary>
+        /// <returns>String representasi waktu alarm</returns>
+        public override string ToString()
+        {
+            return $"{Jam:D2}:{Menit:D2}";
+        }
+    }
+}
