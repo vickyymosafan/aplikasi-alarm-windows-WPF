@@ -3,48 +3,60 @@
                     xmlns:sys="clr-namespace:System;assembly=System.Runtime">
 
     <!-- ========================================
-         WARNA (SOLID COLORS)
+         WARNA (SOLID COLORS) - Dark Theme
+         Based on provided color scheme
          ======================================== -->
     
-    <!-- Warna latar belakang utama -->
-    <SolidColorBrush x:Key="WarnaLatar" Color="#F5F7FA"/>
+    <!-- Background & Foreground -->
+    <SolidColorBrush x:Key="WarnaLatar" Color="#2B3440"/>        <!-- dark background -->
+    <SolidColorBrush x:Key="WarnaTeks" Color="#F7F8F9"/>         <!-- dark foreground -->
     
-    <!-- Warna teks utama -->
-    <SolidColorBrush x:Key="WarnaTeks" Color="#2C3E50"/>
+    <!-- Card -->
+    <SolidColorBrush x:Key="WarnaCard" Color="#3D4754"/>         <!-- dark card -->
+    <SolidColorBrush x:Key="WarnaCardForeground" Color="#F7F8F9"/>
     
-    <!-- Warna tombol utama -->
-    <SolidColorBrush x:Key="WarnaTombol" Color="#3498DB"/>
+    <!-- Primary -->
+    <SolidColorBrush x:Key="WarnaPrimary" Color="#C74B3D"/>      <!-- primary -->
+    <SolidColorBrush x:Key="WarnaPrimaryForeground" Color="#FAF9F8"/>
     
-    <!-- Warna tombol hover -->
-    <SolidColorBrush x:Key="WarnaTombolHover" Color="#2980B9"/>
+    <!-- Secondary -->
+    <SolidColorBrush x:Key="WarnaSecondary" Color="#C89A4A"/>    <!-- secondary -->
+    <SolidColorBrush x:Key="WarnaSecondaryForeground" Color="#F5EDD9"/>
     
-    <!-- Warna latar abu-abu -->
-    <SolidColorBrush x:Key="WarnaAbu" Color="#ECF0F1"/>
+    <!-- Muted -->
+    <SolidColorBrush x:Key="WarnaMuted" Color="#2E3642"/>        <!-- muted -->
+    <SolidColorBrush x:Key="WarnaMutedForeground" Color="#D9DCDF"/>
     
-    <!-- Warna card -->
-    <SolidColorBrush x:Key="WarnaCard" Color="#FFFFFF"/>
+    <!-- Accent -->
+    <SolidColorBrush x:Key="WarnaAccent" Color="#D6A84F"/>       <!-- accent -->
+    <SolidColorBrush x:Key="WarnaAccentForeground" Color="#F5EDD9"/>
     
-    <!-- Warna border -->
-    <SolidColorBrush x:Key="WarnaBorder" Color="#BDC3C7"/>
+    <!-- Destructive -->
+    <SolidColorBrush x:Key="WarnaDestructive" Color="#E17A5F"/>  <!-- destructive -->
+    <SolidColorBrush x:Key="WarnaDestructiveForeground" Color="#FFFFFF"/>
     
-    <!-- Warna teks error -->
-    <SolidColorBrush x:Key="WarnaTeksError" Color="#E74C3C"/>
+    <!-- Border & Input -->
+    <SolidColorBrush x:Key="WarnaBorder" Color="#545E6C"/>       <!-- border -->
+    <SolidColorBrush x:Key="WarnaInput" Color="#545E6C"/>
     
-    <!-- Warna success -->
-    <SolidColorBrush x:Key="WarnaSuccess" Color="#27AE60"/>
-    
-    <!-- Warna accent -->
-    <SolidColorBrush x:Key="WarnaAccent" Color="#9B59B6"/>
+    <!-- Legacy compatibility -->
+    <SolidColorBrush x:Key="WarnaTombol" Color="#C74B3D"/>
+    <SolidColorBrush x:Key="WarnaTombolHover" Color="#B03D2F"/>
+    <SolidColorBrush x:Key="WarnaTeksSecondary" Color="#D9DCDF"/>
+    <SolidColorBrush x:Key="WarnaTeksError" Color="#E17A5F"/>
+    <SolidColorBrush x:Key="WarnaSuccess" Color="#C89A4A"/>
+    <SolidColorBrush x:Key="WarnaAbu" Color="#3D4754"/>
 
     <!-- ========================================
          UKURAN FONT
          ======================================== -->
     
-    <!-- Ukuran font normal -->
-    <sys:Double x:Key="UkuranFontNormal">14</sys:Double>
-    
-    <!-- Ukuran font besar -->
-    <sys:Double x:Key="UkuranFontBesar">18</sys:Double>
+    <!-- Ukuran font -->
+    <sys:Double x:Key="UkuranFontKecil">12</sys:Double>
+    <sys:Double x:Key="UkuranFontNormal">16</sys:Double>
+    <sys:Double x:Key="UkuranFontBesar">20</sys:Double>
+    <sys:Double x:Key="UkuranFontJumbo">48</sys:Double>
+    <sys:Double x:Key="UkuranFontMega">72</sys:Double>
 
     <!-- ========================================
          SPACING (MARGIN & PADDING)
@@ -69,12 +81,12 @@
 
     <!-- Style untuk Button -->
     <Style TargetType="Button">
-        <Setter Property="Background" Value="{StaticResource WarnaTombol}"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="Height" Value="40"/>
-        <Setter Property="MinWidth" Value="120"/>
-        <Setter Property="Padding" Value="16,8"/>
-        <Setter Property="FontSize" Value="{StaticResource UkuranFontNormal}"/>
+        <Setter Property="Background" Value="{StaticResource WarnaPrimary}"/>
+        <Setter Property="Foreground" Value="{StaticResource WarnaPrimaryForeground}"/>
+        <Setter Property="Height" Value="48"/>
+        <Setter Property="MinWidth" Value="140"/>
+        <Setter Property="Padding" Value="20,10"/>
+        <Setter Property="FontSize" Value="16"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -86,6 +98,12 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="8"
                             Padding="{TemplateBinding Padding}">
+                        <Border.Effect>
+                            <DropShadowEffect Color="#000000" 
+                                              Opacity="0.15" 
+                                              BlurRadius="12" 
+                                              ShadowDepth="2"/>
+                        </Border.Effect>
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -95,7 +113,7 @@
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="RenderTransform">
                                 <Setter.Value>
-                                    <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
+                                    <ScaleTransform ScaleX="0.98" ScaleY="0.98"/>
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
@@ -103,6 +121,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
     </Style>
 
     <!-- Style untuk TextBox -->
@@ -138,12 +157,14 @@
 
     <!-- Style untuk ComboBox -->
     <Style TargetType="ComboBox">
-        <Setter Property="Height" Value="40"/>
-        <Setter Property="Padding" Value="12,8"/>
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Height" Value="48"/>
+        <Setter Property="Padding" Value="14,10"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="BorderBrush" Value="{StaticResource WarnaBorder}"/>
-        <Setter Property="BorderThickness" Value="2"/>
-        <Setter Property="Background" Value="White"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Background" Value="{StaticResource WarnaCard}"/>
+        <Setter Property="Foreground" Value="{StaticResource WarnaTeks}"/>
     </Style>
 
     <!-- Style untuk ListBox -->

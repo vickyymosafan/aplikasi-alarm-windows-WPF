@@ -1,11 +1,11 @@
 <Window x:Class="AplikasiAlarmWindows.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="⏰ Aplikasi Alarm Windows"
-        Width="900"
-        Height="700"
-        MinWidth="800"
-        MinHeight="600"
+        Title="⏰ Alarm Windows - vickymosafan"
+        Width="1100"
+        Height="750"
+        MinWidth="900"
+        MinHeight="650"
         Background="{StaticResource WarnaLatar}"
         WindowStartupLocation="CenterScreen">
     
@@ -15,346 +15,330 @@
                 <ResourceDictionary Source="/AplikasiAlarmWindows;component/Resource/KamusGaya.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             
-            <!-- Converter untuk boolean to visibility -->
             <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
-            
-            <!-- Inverse Boolean to Visibility Converter -->
-            <Style x:Key="InverseVisibilityStyle" TargetType="FrameworkElement">
-                <Setter Property="Visibility" Value="Visible"/>
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding AdaAlarmAktif}" Value="True">
-                        <Setter Property="Visibility" Value="Collapsed"/>
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
         </ResourceDictionary>
     </Window.Resources>
     
-    <Grid Margin="24">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/> <!-- Header dengan waktu -->
-            <RowDefinition Height="Auto"/> <!-- Input Card -->
+            <RowDefinition Height="Auto"/> <!-- Header Clock -->
+            <RowDefinition Height="Auto"/> <!-- Input Section -->
             <RowDefinition Height="*"/>    <!-- Alarm List -->
-            <RowDefinition Height="Auto"/> <!-- Control buttons -->
             <RowDefinition Height="Auto"/> <!-- Footer -->
         </Grid.RowDefinitions>
         
         <!-- ========================================
-             HEADER - WAKTU REALTIME (Row 0)
+             HEADER - CLOCK DISPLAY (Row 0)
              ======================================== -->
         <Border Grid.Row="0"
-                Background="{StaticResource WarnaCard}"
-                Padding="24,20"
-                Margin="0,0,0,24"
-                CornerRadius="16">
-            <Border.Effect>
-                <DropShadowEffect Color="#000000" Opacity="0.08" BlurRadius="20" ShadowDepth="4" Direction="270"/>
-            </Border.Effect>
-            
-            <Grid>
+                Background="{StaticResource WarnaPrimary}"
+                Padding="40,32">
+            <Grid MaxWidth="1000" HorizontalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 
-                <!-- Icon Clock -->
-                <Border Grid.Column="0"
-                        Background="{StaticResource WarnaTombol}"
-                        Width="56"
-                        Height="56"
-                        CornerRadius="12"
-                        Margin="0,0,20,0">
-                    <TextBlock Text="🕐"
-                               FontSize="32"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"/>
-                </Border>
+                <!-- Clock Icon -->
+                <Viewbox Grid.Column="0" Width="80" Height="80" Margin="0,0,24,0">
+                    <TextBlock Text="⏰" FontSize="80"/>
+                </Viewbox>
                 
-                <!-- Waktu Info -->
+                <!-- Time Display -->
                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                    <TextBlock Text="Waktu Saat Ini"
-                               FontSize="12"
-                               Foreground="#7F8C8D"
-                               FontWeight="Medium"
-                               Margin="0,0,0,4"/>
                     <TextBlock Text="{Binding WaktuSekarang}"
-                               FontSize="18"
+                               FontSize="24"
                                FontWeight="Bold"
-                               Foreground="{StaticResource WarnaTeks}"/>
+                               Foreground="{StaticResource WarnaPrimaryForeground}"
+                               TextWrapping="Wrap"/>
                 </StackPanel>
             </Grid>
         </Border>
         
         <!-- ========================================
-             INPUT CARD (Row 1)
+             INPUT SECTION (Row 1)
              ======================================== -->
         <Border Grid.Row="1"
                 Background="{StaticResource WarnaCard}"
-                Padding="24"
-                Margin="0,0,0,24"
-                CornerRadius="16">
-            <Border.Effect>
-                <DropShadowEffect Color="#000000" Opacity="0.08" BlurRadius="20" ShadowDepth="4" Direction="270"/>
-            </Border.Effect>
-            
-            <StackPanel>
+                Padding="32,28"
+                BorderBrush="{StaticResource WarnaBorder}"
+                BorderThickness="0,0,0,1">
+            <Grid MaxWidth="1000" HorizontalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
                 <!-- Title -->
-                <TextBlock Text="➕ Tambah Alarm Baru"
-                           FontSize="18"
+                <TextBlock Grid.Row="0"
+                           Text="➕ TAMBAH ALARM BARU"
+                           FontSize="20"
                            FontWeight="Bold"
                            Foreground="{StaticResource WarnaTeks}"
-                           Margin="0,0,0,20"/>
+                           Margin="0,0,0,24"
+                           HorizontalAlignment="Center"/>
                 
-                <!-- Input Grid -->
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
+                <!-- Input Controls -->
+                <WrapPanel Grid.Row="1"
+                           HorizontalAlignment="Center"
+                           Orientation="Horizontal">
                     
-                    <!-- Jam Section -->
-                    <StackPanel Grid.Column="0" Margin="0,0,16,0">
-                        <TextBlock Text="Jam"
+                    <!-- Jam -->
+                    <StackPanel Margin="0,0,16,0">
+                        <TextBlock Text="JAM"
                                    FontSize="12"
-                                   Foreground="#7F8C8D"
-                                   Margin="0,0,0,8"/>
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource WarnaTeksSecondary}"
+                                   Margin="0,0,0,8"
+                                   HorizontalAlignment="Center"/>
                         <ComboBox ItemsSource="{Binding DaftarJam}"
                                   SelectedItem="{Binding JamInput, Mode=TwoWay}"
-                                  Width="100"
-                                  FontSize="16"
-                                  FontWeight="Bold"/>
+                                  Width="110"
+                                  HorizontalContentAlignment="Center"/>
                     </StackPanel>
                     
                     <!-- Separator -->
-                    <TextBlock Grid.Column="1"
-                               Text=":"
-                               FontSize="24"
+                    <TextBlock Text=":"
+                               FontSize="32"
                                FontWeight="Bold"
+                               Foreground="{StaticResource WarnaTeks}"
                                VerticalAlignment="Bottom"
                                Margin="0,0,16,8"/>
                     
-                    <!-- Menit Section -->
-                    <StackPanel Grid.Column="2" Margin="0,0,24,0">
-                        <TextBlock Text="Menit"
+                    <!-- Menit -->
+                    <StackPanel Margin="0,0,24,0">
+                        <TextBlock Text="MENIT"
                                    FontSize="12"
-                                   Foreground="#7F8C8D"
-                                   Margin="0,0,0,8"/>
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource WarnaTeksSecondary}"
+                                   Margin="0,0,0,8"
+                                   HorizontalAlignment="Center"/>
                         <ComboBox ItemsSource="{Binding DaftarMenit}"
                                   SelectedItem="{Binding MenitInput, Mode=TwoWay}"
-                                  Width="100"
-                                  FontSize="16"
-                                  FontWeight="Bold"/>
+                                  Width="110"
+                                  HorizontalContentAlignment="Center"/>
                     </StackPanel>
                     
-                    <!-- Suara Section -->
-                    <StackPanel Grid.Column="3" Margin="0,0,24,0">
-                        <TextBlock Text="Suara Alarm"
+                    <!-- Suara -->
+                    <StackPanel Margin="0,0,24,0">
+                        <TextBlock Text="SUARA ALARM"
                                    FontSize="12"
-                                   Foreground="#7F8C8D"
-                                   Margin="0,0,0,8"/>
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource WarnaTeksSecondary}"
+                                   Margin="0,0,0,8"
+                                   HorizontalAlignment="Center"/>
                         <ComboBox ItemsSource="{Binding DaftarFileSuara}"
                                   SelectedItem="{Binding FileSuaraTerpilih, Mode=TwoWay}"
-                                  Width="200"/>
+                                  Width="220"/>
                     </StackPanel>
                     
-                    <!-- Spacer -->
-                    <Border Grid.Column="4"/>
-                    
-                    <!-- Tombol Tambah -->
-                    <Button Grid.Column="5"
-                            Content="➕ Tambah Alarm"
+                    <!-- Button -->
+                    <Button Content="➕ TAMBAH"
                             Command="{Binding TambahAlarmCommand}"
                             VerticalAlignment="Bottom"
-                            HorizontalAlignment="Right"
-                            MinWidth="160"/>
-                </Grid>
+                            MinWidth="150"
+                            Height="48"/>
+                </WrapPanel>
                 
                 <!-- Validation Message -->
-                <TextBlock Text="{Binding PesanValidasi}"
-                           Foreground="{StaticResource WarnaTeksError}"
-                           FontSize="13"
-                           Margin="0,12,0,0"
-                           TextWrapping="Wrap"
-                           FontWeight="Medium"/>
-            </StackPanel>
+                <TextBlock Grid.Row="2"
+                           Text="{Binding PesanValidasi}"
+                           Foreground="{StaticResource WarnaDestructive}"
+                           FontSize="14"
+                           FontWeight="SemiBold"
+                           Margin="0,16,0,0"
+                           HorizontalAlignment="Center"
+                           TextWrapping="Wrap"/>
+            </Grid>
         </Border>
         
         <!-- ========================================
              ALARM LIST (Row 2)
              ======================================== -->
-        <Grid Grid.Row="2">
-            <!-- List Header -->
-            <StackPanel Margin="0,0,0,16">
-                <TextBlock Text="📋 Daftar Alarm"
+        <ScrollViewer Grid.Row="2"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled"
+                      Background="{StaticResource WarnaLatar}">
+            <Grid MaxWidth="1000" 
+                  HorizontalAlignment="Center"
+                  Margin="32,24,32,24">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <!-- Section Title -->
+                <TextBlock Grid.Row="0"
+                           Text="📋 DAFTAR ALARM AKTIF"
                            FontSize="18"
                            FontWeight="Bold"
                            Foreground="{StaticResource WarnaTeks}"
-                           Margin="0,0,0,16"/>
+                           Margin="0,0,0,20"/>
                 
-                <!-- ScrollViewer untuk List -->
-                <ScrollViewer VerticalScrollBarVisibility="Auto"
-                              HorizontalScrollBarVisibility="Disabled">
-                    <Grid>
-                        <!-- ListBox dengan Alarm -->
-                        <ListBox ItemsSource="{Binding DaftarAlarm}">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        
-                                        <!-- Icon Alarm -->
-                                        <Border Grid.Column="0"
-                                                Background="{StaticResource WarnaAccent}"
-                                                Width="48"
-                                                Height="48"
-                                                CornerRadius="10"
-                                                Margin="0,0,16,0">
-                                            <TextBlock Text="⏰"
-                                                       FontSize="24"
-                                                       HorizontalAlignment="Center"
-                                                       VerticalAlignment="Center"/>
-                                        </Border>
-                                        
-                                        <!-- Alarm Info -->
-                                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                            <TextBlock Text="{Binding}"
-                                                       FontSize="24"
-                                                       FontWeight="Bold"
-                                                       Foreground="{StaticResource WarnaTeks}"/>
-                                            <TextBlock Text="{Binding NamaFileSuara, StringFormat='🔊 {0}'}"
-                                                       FontSize="13"
-                                                       Foreground="#7F8C8D"
-                                                       Margin="0,4,0,0"/>
-                                        </StackPanel>
-                                        
-                                        <!-- Status Badge -->
-                                        <Border Grid.Column="2"
-                                                Background="{StaticResource WarnaTeksError}"
-                                                Padding="12,6"
-                                                CornerRadius="20"
-                                                Margin="16,0,16,0"
-                                                VerticalAlignment="Center"
-                                                Visibility="{Binding IsAktif, Converter={StaticResource BoolToVisConverter}}">
-                                            <TextBlock Text="🔔 AKTIF"
-                                                       Foreground="White"
-                                                       FontWeight="Bold"
-                                                       FontSize="12"/>
-                                        </Border>
-                                        
-                                        <!-- Tombol Hapus -->
-                                        <Button Grid.Column="3"
-                                                Content="🗑️"
-                                                Command="{Binding DataContext.HapusAlarmCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
-                                                CommandParameter="{Binding}"
-                                                Background="{StaticResource WarnaTeksError}"
-                                                Foreground="White"
-                                                Width="48"
-                                                Height="48"
-                                                FontSize="18"
-                                                Padding="0"
-                                                MinWidth="48"
-                                                ToolTip="Hapus Alarm"/>
-                                    </Grid>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                        
-                        <!-- Empty State -->
-                        <Border Background="{StaticResource WarnaCard}"
-                                Padding="48"
-                                CornerRadius="16"
-                                BorderBrush="{StaticResource WarnaBorder}"
-                                BorderThickness="2">
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding DaftarAlarm.Count}" Value="0">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
-                            
-                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <TextBlock Text="⏰"
-                                           FontSize="64"
-                                           HorizontalAlignment="Center"
-                                           Opacity="0.3"
-                                           Margin="0,0,0,16"/>
-                                <TextBlock Text="Belum Ada Alarm"
-                                           FontSize="20"
-                                           FontWeight="Bold"
-                                           Foreground="{StaticResource WarnaTeks}"
-                                           HorizontalAlignment="Center"
-                                           Margin="0,0,0,8"/>
-                                <TextBlock Text="Tambahkan alarm pertama Anda menggunakan form di atas"
-                                           FontSize="14"
-                                           Foreground="#7F8C8D"
-                                           HorizontalAlignment="Center"
-                                           TextAlignment="Center"
-                                           TextWrapping="Wrap"
-                                           MaxWidth="400"/>
-                            </StackPanel>
-                        </Border>
-                    </Grid>
-                </ScrollViewer>
-            </StackPanel>
-        </Grid>
+                <!-- Alarm List -->
+                <ItemsControl Grid.Row="1" ItemsSource="{Binding DaftarAlarm}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="{StaticResource WarnaCard}"
+                                    BorderBrush="{StaticResource WarnaBorder}"
+                                    BorderThickness="1"
+                                    CornerRadius="12"
+                                    Padding="24,20"
+                                    Margin="0,0,0,12">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="#000000" 
+                                                      Opacity="0.2" 
+                                                      BlurRadius="16" 
+                                                      ShadowDepth="2"/>
+                                </Border.Effect>
+                                
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <!-- Icon -->
+                                    <Border Grid.Column="0"
+                                            Background="{StaticResource WarnaAccent}"
+                                            Width="64"
+                                            Height="64"
+                                            CornerRadius="12"
+                                            Margin="0,0,20,0">
+                                        <TextBlock Text="⏰"
+                                                   FontSize="32"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"/>
+                                    </Border>
+                                    
+                                    <!-- Info -->
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding}"
+                                                   FontSize="32"
+                                                   FontWeight="Bold"
+                                                   Foreground="{StaticResource WarnaTeks}"/>
+                                        <TextBlock Text="{Binding NamaFileSuara, StringFormat='🔊 {0}'}"
+                                                   FontSize="14"
+                                                   Foreground="{StaticResource WarnaTeksSecondary}"
+                                                   Margin="0,6,0,0"/>
+                                    </StackPanel>
+                                    
+                                    <!-- Active Badge -->
+                                    <Border Grid.Column="2"
+                                            Background="{StaticResource WarnaDestructive}"
+                                            Padding="16,8"
+                                            CornerRadius="20"
+                                            Margin="16,0"
+                                            VerticalAlignment="Center"
+                                            Visibility="{Binding IsAktif, Converter={StaticResource BoolToVisConverter}}">
+                                        <TextBlock Text="🔔 AKTIF"
+                                                   Foreground="{StaticResource WarnaDestructiveForeground}"
+                                                   FontWeight="Bold"
+                                                   FontSize="13"/>
+                                    </Border>
+                                    
+                                    <!-- Delete Button -->
+                                    <Button Grid.Column="3"
+                                            Content="🗑️"
+                                            Command="{Binding DataContext.HapusAlarmCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                            CommandParameter="{Binding}"
+                                            Background="{StaticResource WarnaDestructive}"
+                                            Width="56"
+                                            Height="56"
+                                            FontSize="20"
+                                            Padding="0"
+                                            MinWidth="56"
+                                            ToolTip="Hapus Alarm"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                
+                <!-- Empty State -->
+                <Border Grid.Row="1"
+                        Background="{StaticResource WarnaCard}"
+                        Padding="48,40"
+                        CornerRadius="12"
+                        BorderBrush="{StaticResource WarnaBorder}"
+                        BorderThickness="1">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding DaftarAlarm.Count}" Value="0">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="⏰"
+                                   FontSize="72"
+                                   HorizontalAlignment="Center"
+                                   Opacity="0.3"
+                                   Margin="0,0,0,20"/>
+                        <TextBlock Text="BELUM ADA ALARM"
+                                   FontSize="22"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource WarnaTeks}"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,10"/>
+                        <TextBlock Text="Tambahkan alarm pertama Anda menggunakan form di atas"
+                                   FontSize="14"
+                                   Foreground="{StaticResource WarnaTeksSecondary}"
+                                   HorizontalAlignment="Center"
+                                   TextAlignment="Center"
+                                   TextWrapping="Wrap"
+                                   MaxWidth="400"/>
+                    </StackPanel>
+                </Border>
+                
+                <!-- Stop Alarm Button -->
+                <Button Grid.Row="2"
+                        Content="🛑 STOP ALARM"
+                        Command="{Binding StopAlarmCommand}"
+                        Background="{StaticResource WarnaDestructive}"
+                        HorizontalAlignment="Center"
+                        MinWidth="250"
+                        Height="56"
+                        FontSize="18"
+                        Margin="0,20,0,0"
+                        Visibility="{Binding AdaAlarmAktif, Converter={StaticResource BoolToVisConverter}}"/>
+            </Grid>
+        </ScrollViewer>
         
         <!-- ========================================
-             CONTROL BUTTONS (Row 3)
+             FOOTER (Row 3)
              ======================================== -->
         <Border Grid.Row="3"
-                Padding="0,16,0,0"
-                Visibility="{Binding AdaAlarmAktif, Converter={StaticResource BoolToVisConverter}}">
-            <Button Content="🛑 Stop Alarm"
-                    Command="{Binding StopAlarmCommand}"
-                    Background="{StaticResource WarnaTeksError}"
-                    HorizontalAlignment="Center"
-                    MinWidth="200"
-                    Height="50"
-                    FontSize="16"/>
-        </Border>
-        
-        <!-- ========================================
-             FOOTER - AUTHOR INFO (Row 4)
-             ======================================== -->
-        <Border Grid.Row="4"
-                Padding="0,16,0,0"
+                Background="{StaticResource WarnaCard}"
+                Padding="20"
                 BorderBrush="{StaticResource WarnaBorder}"
-                BorderThickness="0,1,0,0"
-                Margin="0,16,0,0">
+                BorderThickness="0,1,0,0">
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Center">
-                <TextBlock Text="Made with by "
-                           FontSize="12"
-                           Foreground="#7F8C8D"
+                <TextBlock Text="Made with ❤️ by "
+                           FontSize="13"
+                           Foreground="{StaticResource WarnaTeksSecondary}"
                            VerticalAlignment="Center"/>
                 <TextBlock Text="vickymosafan"
-                           FontSize="12"
-                           FontWeight="Bold"
-                           Foreground="{StaticResource WarnaTombol}"
+                           FontSize="13"
+                           FontWeight="SemiBold"
+                           Foreground="{StaticResource WarnaPrimary}"
                            VerticalAlignment="Center"
                            Margin="4,0,0,0"/>
                 <TextBlock Text=" © 2025"
-                           FontSize="12"
-                           Foreground="#7F8C8D"
+                           FontSize="13"
+                           Foreground="{StaticResource WarnaTeksSecondary}"
                            VerticalAlignment="Center"
                            Margin="4,0,0,0"/>
             </StackPanel>
         </Border>
-        
     </Grid>
-    
 </Window>
