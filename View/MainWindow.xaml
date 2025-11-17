@@ -36,6 +36,7 @@
             <RowDefinition Height="Auto"/> <!-- Input Card -->
             <RowDefinition Height="*"/>    <!-- Alarm List -->
             <RowDefinition Height="Auto"/> <!-- Control buttons -->
+            <RowDefinition Height="Auto"/> <!-- Footer -->
         </Grid.RowDefinitions>
         
         <!-- ========================================
@@ -324,6 +325,34 @@
                     MinWidth="200"
                     Height="50"
                     FontSize="16"/>
+        </Border>
+        
+        <!-- ========================================
+             FOOTER - AUTHOR INFO (Row 4)
+             ======================================== -->
+        <Border Grid.Row="4"
+                Padding="0,16,0,0"
+                BorderBrush="{StaticResource WarnaBorder}"
+                BorderThickness="0,1,0,0"
+                Margin="0,16,0,0">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <TextBlock Text="Made with by "
+                           FontSize="12"
+                           Foreground="#7F8C8D"
+                           VerticalAlignment="Center"/>
+                <TextBlock Text="vickymosafan"
+                           FontSize="12"
+                           FontWeight="Bold"
+                           Foreground="{StaticResource WarnaTombol}"
+                           VerticalAlignment="Center"
+                           Margin="4,0,0,0"/>
+                <TextBlock Text=" © 2025"
+                           FontSize="12"
+                           Foreground="#7F8C8D"
+                           VerticalAlignment="Center"
+                           Margin="4,0,0,0"/>
+            </StackPanel>
         </Border>
         
     </Grid>

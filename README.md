@@ -132,6 +132,12 @@ Proyek ini sedang dalam tahap development mengikuti spec yang ada di `.kiro/spec
 - [ ] Task 15: Testing (optional)
 - [ ] Task 16: Build configuration
 
+## Author
+
+**vickymosafan**
+
+Made with by vickymosafan © 2025
+
 ## Lisensi
 
 Proyek ini dibuat untuk keperluan pembelajaran dan development.
